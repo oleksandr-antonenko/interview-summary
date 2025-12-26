@@ -149,6 +149,10 @@ processBtn.addEventListener('click', async () => {
     });
 
     if (!response.ok) {
+      if (response.status === 401) {
+        window.location.href = '/';
+        return;
+      }
       const data = await response.json();
       throw new Error(data.error || 'Processing failed');
     }

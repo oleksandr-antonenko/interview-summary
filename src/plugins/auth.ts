@@ -11,15 +11,24 @@ function generateSessionId(): string {
 async function authPluginFn(fastify: FastifyInstance) {
   fastify.decorate('authenticate', async function (request: FastifyRequest, reply: FastifyReply) {
     const sessionId = request.cookies.sessionId;
+    const isApiRequest = request.url.startsWith('/api/');
+
+    const sendUnauthorized = () => {
+      if (isApiRequest) {
+        reply.status(401);
+        return reply.send({ success: false, error: 'Unauthorized' });
+      }
+      return reply.redirect('/');
+    };
 
     if (!sessionId) {
-      return reply.redirect('/');
+      return sendUnauthorized();
     }
 
     const session = sessions.get(sessionId);
     if (!session || session.expiresAt < Date.now()) {
       sessions.delete(sessionId || '');
-      return reply.redirect('/');
+      return sendUnauthorized();
     }
   });
 
