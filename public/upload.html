@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload - Interview Transcription</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container wide">
+    <div class="header">
+      <h1>Upload Audio Files</h1>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+
+    <div id="error" class="error" style="display: none;"></div>
+
+    <div class="drop-zone" id="dropZone">
+      <p>Drag & drop audio files here</p>
+      <p class="hint">or click to select files</p>
+      <p class="hint">Supported: MP3, WAV, M4A, WebM, OGG, FLAC, AAC, AIFF, AMR, WMA, and more</p>
+      <input type="file" id="fileInput" multiple accept="audio/*" style="display: none;">
+    </div>
+
+    <ul class="file-list" id="fileList"></ul>
+
+    <div class="form-group">
+      <label for="language">Transcription Language</label>
+      <select id="language" class="select-input">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+      </select>
+    </div>
+
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <p class="progress-text" id="progressText">Processing...</p>
+    </div>
+
+    <button id="processBtn" disabled>Process Files</button>
+  </div>
+
+  <script src="/js/upload.js"></script>
+</body>
+</html>
