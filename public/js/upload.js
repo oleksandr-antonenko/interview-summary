@@ -141,20 +141,29 @@ processBtn.addEventListener('click', async () => {
 
   try {
     progressFill.style.width = '30%';
-    progressText.textContent = 'Transcribing audio...';
+    progressText.textContent = 'Uploading and transcribing audio...';
+
+    console.log('Starting upload, files:', files.length, 'language:', language);
 
     const response = await fetch('/api/transcribe', {
       method: 'POST',
       body: formData,
     });
 
+    console.log('Response status:', response.status, 'content-type:', response.headers.get('content-type'));
+
     if (!response.ok) {
       if (response.status === 401) {
         window.location.href = '/';
         return;
       }
-      const data = await response.json();
-      throw new Error(data.error || 'Processing failed');
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await response.json();
+        throw new Error(data.error || 'Processing failed');
+      } else {
+        throw new Error(`Server error (${response.status}). Check server logs or proxy configuration.`);
+      }
     }
 
     progressFill.style.width = '90%';
@@ -181,7 +190,8 @@ processBtn.addEventListener('click', async () => {
       progressContainer.classList.remove('active');
     }, 2000);
   } catch (err) {
-    errorEl.textContent = err.message;
+    console.error('Upload error:', err);
+    errorEl.textContent = err.message || 'Unknown error occurred';
     errorEl.style.display = 'block';
     progressContainer.classList.remove('active');
     processBtn.disabled = false;
