@@ -41,7 +41,9 @@ fileInput.addEventListener('change', (e) => {
 
 function handleFiles(newFiles) {
   for (const file of newFiles) {
-    if (file.type.startsWith('audio/')) {
+    const isAudioType = file.type.startsWith('audio/');
+    const isWmaExtension = file.name.toLowerCase().endsWith('.wma');
+    if (isAudioType || isWmaExtension) {
       files.push(file);
     }
   }
