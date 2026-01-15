@@ -38,6 +38,8 @@ const ALLOWED_MIMETYPES = [
   'audio/amr-wb',
   // WMA
   'audio/x-ms-wma',
+  'audio/wma',
+  'audio/x-wma',
   // Basic/other
   'audio/basic',
   'audio/L16',
