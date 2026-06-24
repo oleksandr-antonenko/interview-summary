@@ -8,7 +8,7 @@ const LANGUAGE_NAMES: Record<string, string> = {
 };
 
 export async function identifySpeakers(transcription: string, language: string = 'en'): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
   const langName = LANGUAGE_NAMES[language] || 'English';
 
   const prompt = `Analyze this interview transcription and identify who each speaker is.
@@ -57,7 +57,7 @@ Respond with ONLY the JSON object, no other text.`;
 }
 
 export async function generateSummary(transcription: string, language: string = 'en'): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
   const langName = LANGUAGE_NAMES[language] || 'English';
 
   const prompt = `You are an expert at summarizing interview transcriptions.
